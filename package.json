@@ -1,5 +1,5 @@
 {
-"name": "angular-auth",
+"name": "timmisNames",
 "main": "server.js",
 "dependencies": {
 	"bcryptjs": "^0.7.12",
