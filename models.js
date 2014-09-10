@@ -1,13 +1,13 @@
 var mongoose =  require('mongoose');
 var bcrypt = require('bcryptjs');
+
+
+
 var userSchema = new mongoose.Schema({
 	email: {type: String, unique: true, lowercase: true},
 	password: {type: String, select: false},
-	displayName: String
-/*	todos: [{ 
-			_id: ObjectId,
-			text: String
-		}] */
+	displayName: String,
+	todos: [{text: String, importance: Number}]
 });
 
 userSchema.pre('save', function (next) {

@@ -113,7 +113,7 @@ Get all todos for current user
 --------------------------------------------------------------------------
 */
 app.get('/api/todos', isLoggedIn, function (req, res) {
-	User.findbyId(req.user, function (err, user) {
+	User.findById(req.user, function (err, user) {
 		if (err)
 			res.send(err);
 		res.json(user.todos);
@@ -125,12 +125,15 @@ create a todo and send back all todos after creation
 --------------------------------------------------------------------------
 */
 app.post('/api/todos', isLoggedIn, function (req, res) {
-	var todo = req.body.text;
-	User.findbyId(req.user, function (err, user) {
+	var todo = {text: req.body.text, importance: 0};
+	User.findById(req.user, function (err, user) {
 		if (err)
 			res.send(err);
-		user.todos.push(todo)
-	});
+			//push todo to end of array and return users todos
+		user.todos.push(todo);
+		res.json(user.todos);
+		user.save();	
+		});
 });
 
 
