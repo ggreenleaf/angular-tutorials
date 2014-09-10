@@ -45,10 +45,9 @@ App Routes
 -----------------------------------
 */
 module.exports = function (app) {
-
 /*
 --------------------------------------------------------------------------
-GET /api/me
+GET /api/me 
 --------------------------------------------------------------------------
 */
 app.get('/api/me', isLoggedIn, function (req, res) {
@@ -94,13 +93,11 @@ app.post('/auth/login', function (req, res) {
 		});
 	});
 });
-
 /*
 --------------------------------------------------------------------------
 Create email and password Account
 --------------------------------------------------------------------------
 */
-
 app.post('/auth/signup', function (req, res) {
 	var user = new User();
 	user.displayName = req.body.displayName;
@@ -110,4 +107,48 @@ app.post('/auth/signup', function (req, res) {
 		res.send({token: createToken(req, user) });
 	});
 });
+/*
+--------------------------------------------------------------------------
+Get all todos for current user
+--------------------------------------------------------------------------
+*/
+app.get('/api/todos', isLoggedIn, function (req, res) {
+	User.findbyId(req.user, function (err, user) {
+		if (err)
+			res.send(err);
+		res.json(user.todos);
+	});
+});
+/*
+--------------------------------------------------------------------------
+create a todo and send back all todos after creation
+--------------------------------------------------------------------------
+*/
+app.post('/api/todos', isLoggedIn, function (req, res) {
+	var todo = req.body.text;
+	User.findbyId(req.user, function (err, user) {
+		if (err)
+			res.send(err);
+		user.todos.push(todo)
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

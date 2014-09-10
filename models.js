@@ -4,6 +4,10 @@ var userSchema = new mongoose.Schema({
 	email: {type: String, unique: true, lowercase: true},
 	password: {type: String, select: false},
 	displayName: String
+/*	todos: [{ 
+			_id: ObjectId,
+			text: String
+		}] */
 });
 
 userSchema.pre('save', function (next) {

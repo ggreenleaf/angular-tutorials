@@ -10,7 +10,6 @@ var request = require('request');
 var config = require('./config');
 
 //user model
-
 mongoose.connect(config.MONGO_URI);
 
 var app = express();

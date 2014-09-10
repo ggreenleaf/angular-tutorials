@@ -2,7 +2,8 @@ angular.module('timmisNames', ['ngResource', 'ngMessages', 'ngRoute', 'satellize
 	.config(function ($routeProvider, $authProvider) {
 		$routeProvider
 			.when('/', {
-				templateUrl: '../views/home.html'
+				templateUrl: '../views/home.html',
+				controller: 'HomeCtrl'
 			})
 			.when('/login', {
 				templateUrl: '../views/login.html',

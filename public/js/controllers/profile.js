@@ -1,5 +1,5 @@
 angular.module('timmisNames')
-	.controller('ProfileCtrl', function($scope, $auth, $alert, Account) {
+	.controller('ProfileCtrl', function ($scope, $auth, $alert, Account) {
 		/*
 		*Get user's profile info
 		*/

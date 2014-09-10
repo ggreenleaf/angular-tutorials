@@ -1,25 +1,32 @@
 <div class="container">
-  <div class="panel panel-default">
-    <div class="panel-heading">Home Page</div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-sm-6">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-            tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-            fermentum massa justo sit amet risus. Etiam porta sem malesuada
-            magna mollis euismod. Donec sed odio dui.</p>
-          <p><a class="btn btn-primary" href="#">View details »</a></p>
+    <div ng-if="!isAuthenticated()">
+      	<div class="center-form panel">
+      		<h2 class="text-center" >Welcome to timmisNames	</h2>
+      			<div class="panel-body center-block">
+      				<a class="btn btn-info btn-block" href="#/login">Login</a>
+      				<a class="btn btn-success btn-block" href="#/signup">Sign Up</a>
+      			</div>
+      		</div>
+   	</div>
+  <div class="todos" ng-if="isAuthenticated()">
+      <div class="panel panel-primary">
+          <div class="panel-heading text-center">
+          You have {{todos.length}} todo!
+          </div>
+          <div class="panel-body text-center" ng-repeat="todo in todos | orderBy: '-importance'">{{todo.text}} 
+          </div>
+          <div class="panel-footer">
+            <form name="todoForm">
+              <div class="input-group">
+                <input class="form-control" type="text" placeholder="What do you need todo" ng-model="todoForm.text" />
+                <span class="input-group-btn">
+                  <button class="btn btn-large btn-primary" type="submit" ng-click="addTodo(todoForm)">Add</button>
+                </span>
+              </div>
+            </form>
+
+
+          </div>
         </div>
-        <div class="col-sm-6">
-          <h2>Heading</h2>
-          <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus,
-            tellus ac cursus commodo, tortor mauris condimentum nibh, ut
-            fermentum massa justo sit amet risus. Etiam porta sem malesuada
-            magna mollis euismod. Donec sed odio dui.</p>
-          <p><a class="btn btn-primary" href="#">View details »</a></p>
-        </div>
-      </div>
-    </div>
-  </div>
+    </div>  
 </div>
