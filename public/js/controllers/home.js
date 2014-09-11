@@ -1,11 +1,10 @@
 angular.module('timmisNames')
 	.controller('HomeCtrl', function ($scope, $auth, $alert, $http) {
+		
 		$scope.isAuthenticated = function() {
 			return $auth.isAuthenticated();
 		};
-		
-		//$scope.todos = [];
-			
+					
 		$http.get('/api/todos')
 			.success(function (data) {
 				$scope.todos = data;
@@ -24,10 +23,18 @@ angular.module('timmisNames')
 				})
 				.error(function (data) {
 					console.log('Error: ' + data);
-				});
-			
+				});	
 		};
 
+		$scope.deleteTodo = function (id) {
+			$http.delete('/api/todos/'+id)
+				.success(function (data) {
+					$scope.todos = data;
+				})
+				.error(function (data) {
+					console.log('Error: '+ data);
+				});
+		};
 
 	});
 

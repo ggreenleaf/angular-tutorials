@@ -1,4 +1,4 @@
-var User = require('./models');
+var User = require('./models/user');
 var moment = require('moment');
 var jwt = require('jwt-simple');
 var config = require('./config');
@@ -125,14 +125,33 @@ create a todo and send back all todos after creation
 --------------------------------------------------------------------------
 */
 app.post('/api/todos', isLoggedIn, function (req, res) {
-	var todo = {text: req.body.text, importance: 0};
-	User.findById(req.user, function (err, user) {
-		if (err)
-			res.send(err);
-			//push todo to end of array and return users todos
-		user.todos.push(todo);
+		User.findByIdAndUpdate(
+			req.user, 
+			{$push: {"todos":{text: req.body.text, importance: 0}}},
+			function (err, user) {
+				if (err) {
+					console.log(err);
+					res.send(err);
+				}
+			res.json(user.todos);	
+			});
+
+
+});
+/*
+-------------------------------------
+Delete a todo passed by its _id from user and send all remaining todos
+-------------------------------------
+*/
+app.delete('/api/todos/:todo_id', isLoggedIn, function (req, res) {
+	User.findByIdAndUpdate(
+		req.user,
+		{$pull: {todos: { _id: req.params.todo_id}}},
+		function (err, user) {
+			if (err) {
+				res.send(err);
+			}
 		res.json(user.todos);
-		user.save();	
 		});
 });
 
@@ -145,13 +164,5 @@ app.post('/api/todos', isLoggedIn, function (req, res) {
 
 
 
+} //end of export
 
-
-
-
-
-
-
-
-
-}
