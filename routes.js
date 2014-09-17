@@ -127,6 +127,7 @@ app.post('/api/todos', isLoggedIn, function (req, res) {
 		req.user, 
 		{$push: {"todos":{text: req.body.text, upvotes: 0}}},
 		function (err, user) {
+			console.log(user);
 			if (err) {
 				console.log(err);
 				res.send(err);

@@ -10,9 +10,11 @@ var request = require('request');
 var config = require('./config');
 
 //user model
-mongoose.connect(config.MONGO_URI);
+//mongoose.connect(config.MONGO_URI);
+mongoose.connect("mongodb://geoffrey:Gdg078412!@proximus.modulusmongo.net:27017/r4Yxogom");
 
 var app = express();
+
 
 app.set('port', process.env.PORT || 3000);
 app.use(morgan('dev'));
