@@ -55,7 +55,6 @@ app.get('/api/me', isLoggedIn, function (req, res) {
 		res.send(user);
 	});
 });
-
 /*
 --------------------------------------------------------------------------
 PUT /api/me
@@ -73,7 +72,6 @@ app.put('/api/me', isLoggedIn, function (req, res) {
 		});
 	});
 });
-
 /*
 --------------------------------------------------------------------------
 Logging in with email
@@ -125,18 +123,16 @@ create a todo and send back all todos after creation
 --------------------------------------------------------------------------
 */
 app.post('/api/todos', isLoggedIn, function (req, res) {
-		User.findByIdAndUpdate(
-			req.user, 
-			{$push: {"todos":{text: req.body.text, importance: 0}}},
-			function (err, user) {
-				if (err) {
-					console.log(err);
-					res.send(err);
-				}
-			res.json(user.todos);	
-			});
-
-
+	User.findByIdAndUpdate(
+		req.user, 
+		{$push: {"todos":{text: req.body.text, upvotes: 0}}},
+		function (err, user) {
+			if (err) {
+				console.log(err);
+				res.send(err);
+			}
+		res.json(user.todos);	
+		});
 });
 /*
 -------------------------------------
@@ -154,10 +150,25 @@ app.delete('/api/todos/:todo_id', isLoggedIn, function (req, res) {
 		res.json(user.todos);
 		});
 });
-
-
-
-
+/*
+------------------------------------
+adding importance to a todo 
+------------------------------------
+*/
+app.put('/api/todos/upvote/:todo_id', isLoggedIn, function (req, res) {
+	User.update(
+		{ 'todos._id': req.params.todo_id },
+		{$inc : {'todos.$.upvotes': 1 }},
+		function (err, user) {
+			if (err)
+				res.send(err);
+		});
+	User.findById(req.user, function (err, user) {
+		if (err)
+			res.send(err);
+		res.json(user.todos);
+	});
+});
 
 
 
@@ -165,4 +176,3 @@ app.delete('/api/todos/:todo_id', isLoggedIn, function (req, res) {
 
 
 } //end of export
-

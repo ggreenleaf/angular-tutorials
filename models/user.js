@@ -1,10 +1,9 @@
 var mongoose =  require('mongoose');
 var bcrypt = require('bcryptjs');
 
-// var todoSchema = new mongoose.Schema({
-// 	text: String,
-// 	importance: Number
-// });
+//importance used to list todos 
+//by how important they are to do
+//with 0 being the least.
 
 var userSchema = new mongoose.Schema({
 	email: {type: String, unique: true, lowercase: true},
@@ -12,7 +11,7 @@ var userSchema = new mongoose.Schema({
 	displayName: String,
 	todos: [{
 		text: String,
-		importance: Number
+		upvotes: Number
 	}]
 });
 
@@ -33,6 +32,11 @@ userSchema.methods.comparePassword = function (password, done) {
 	bcrypt.compare(password,this.password,function (err, isMatch) {
 		done(err, isMatch);
 	});
+};
+
+userSchema.methods.incrementUpvotes = function (todo) {
+	this.upvotes += 1;
+	this.save(todo);
 };
 
 module.exports = mongoose.model('User', userSchema);
