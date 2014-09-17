@@ -11,7 +11,7 @@ var config = require('./config');
 
 //user model
 //mongoose.connect(config.MONGO_URI);
-mongoose.connect("mongodb://geoffrey:Gdg078412!@proximus.modulusmongo.net:27017/r4Yxogom");
+mongoose.connect("mongodb://geoffrey:gdg201031@proximus.modulusmongo.net:27017/r4Yxogom");
 
 var app = express();
 
